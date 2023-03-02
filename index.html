@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      async function getCepData(cep) {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        console.log(data);
+
+        const table = document.getElementById("cep");
+
+        const row = table.insertRow(0);
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        const cell4 = row.insertCell(3);
+        const cell5 = row.insertCell(4);
+        const cell6 = row.insertCell(5);
+        const cell7 = row.insertCell(6);
+        const cell8 = row.insertCell(7);
+
+        cell1.innerHTML = data.logradouro;
+        cell2.innerHTML = data.complemento;
+        cell3.innerHTML = data.bairro;
+        cell4.innerHTML = data.uf;
+        cell5.innerHTML = data.ibge;
+        cell6.innerHTML = data.gia;
+        cell7.innerHTML = data.ddd;
+        cell8.innerHTML = data.siafi;
+
+        return data;
+      }
+
+      async function getClients() {
+        const response = await fetch("http://demo6097245.mockable.io/clients");
+        const asd = await response.json();
+
+        const data = asd.clients;
+
+        console.log(data);
+
+        const table = document.getElementById("clients-table");
+
+        //)
+
+        console.log(table);
+
+        for (let i = 0; i < data.length; i++) {
+          const row = table.insertRow(i);
+          const cell1 = row.insertCell(0);
+          const cell2 = row.insertCell(1);
+          const cell3 = row.insertCell(2);
+
+          cell1.innerHTML = data[i].name;
+          cell2.innerHTML = data[i].address;
+          cell3.innerHTML = data[i].phone;
+        }
+
+        return data;
+      }
+
+      async function getVehicle() {
+        const response = await fetch("http://demo6097245.mockable.io/vehicles");
+        const { vehicles: data } = await response.json();
+
+        console.log(data);
+
+        const table = document.getElementById("vehicles-table");
+
+        for (let i = 0; i < data.length; i++) {
+          const row = table.insertRow(i);
+          const cell1 = row.insertCell(0);
+          const cell2 = row.insertCell(1);
+          const cell3 = row.insertCell(2);
+          const cell4 = row.insertCell(3);
+
+          cell1.innerHTML = data[i].brand;
+          cell2.innerHTML = data[i].model;
+          cell3.innerHTML = data[i].year;
+          cell4.innerHTML = data[i].plate;
+        }
+
+        return data;
+      }
+
+      async function getSubjects() {
+        const response = await fetch("http://demo6097245.mockable.io/subjects");
+        const { subjects: data } = await response.json();
+
+        console.log(data);
+
+        const table = document.getElementById("subjects-table");
+
+        for (let i = 0; i < data.length; i++) {
+          const row = table.insertRow(i);
+          const cell1 = row.insertCell(0);
+
+          cell1.innerHTML = data[i].name;
+        }
+
+        return data;
+      }
+    </script>
+    <title>API</title>
+  </head>
+  <body>
+    <input type="text" onblur="getCepData(this.value)" />
+    <table>
+      <thead>
+        <tr>
+          <th>Logradouro</th>
+          <th>Complemento</th>
+          <th>Bairro</th>
+          <th>Localidade</th>
+          <th>UF</th>
+          <th>IBGE</th>
+          <th>GIA</th>
+          <th>DDD</th>
+          <th>SIAFI</th>
+        </tr>
+      </thead>
+      <tbody id="cep"></tbody>
+    </table>
+    <table id="clients-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="getClients()">Get Client</button>
+    <table id="vehicles-table">
+      <thead>
+        <tr>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Plate</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="getVehicle()">Get Vehicles</button>
+    <table id="subjects-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="getSubjects()">Get Subjects</button>
+  </body>
+</html>
